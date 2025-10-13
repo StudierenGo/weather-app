@@ -6,6 +6,8 @@ import (
 	"net/http"
 )
 
+const BASE_URL = "https://ipapi.co/json/"
+
 type GeoData struct {
 	City string `json:"city"`
 }
@@ -19,7 +21,7 @@ func GetCurrentLocation(city string) (*GeoData, error) {
 		}, nil
 	}
 
-	response, err := http.Get("https://ipapi.co/json/")
+	response, err := http.Get(BASE_URL)
 	if err != nil {
 		return nil, err
 	}
