@@ -7,7 +7,7 @@ import (
 
 func TestGetCurrentLocation(t *testing.T) {
 	// Arrange block
-	city := "Moscoy"
+	city := "Moscow"
 	expected := geo.GeoData{
 		City: "Moscow",
 	}
