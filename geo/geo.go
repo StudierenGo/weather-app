@@ -3,6 +3,7 @@ package geo
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"io"
 	"net/http"
 )
@@ -25,7 +26,7 @@ func GetCurrentLocation(city string) (*GeoData, error) {
 		isCity := checkCity(city)
 
 		if !isCity {
-			panic("There is no such city!")
+			return nil, errors.New("NOCITY")
 		}
 
 		return &GeoData{
