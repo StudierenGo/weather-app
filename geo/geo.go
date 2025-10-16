@@ -11,6 +11,9 @@ import (
 const getCurrentURL = "https://ipapi.co/json/"
 const checkCityUrl = "https://countriesnow.space/apu/v0.1/countries/population/"
 
+var ErrNoCity = errors.New("NOCITY")
+var ErrNotOk = errors.New("NO_OK")
+
 type GeoData struct {
 	City string `json:"city"`
 }
@@ -26,7 +29,7 @@ func GetCurrentLocation(city string) (*GeoData, error) {
 		isCity := checkCity(city)
 
 		if !isCity {
-			return nil, errors.New("NOCITY")
+			return nil, ErrNoCity
 		}
 
 		return &GeoData{
@@ -38,6 +41,11 @@ func GetCurrentLocation(city string) (*GeoData, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	if response.StatusCode != 200 {
+		return nil, ErrNotOk
+	}
+
 	defer response.Body.Close()
 
 	body, err := io.ReadAll(response.Body)

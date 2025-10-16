@@ -5,6 +5,7 @@ import (
 	"weather/geo"
 )
 
+// Позитивный тест
 func TestGetCurrentLocation(t *testing.T) {
 	// Arrange block
 	city := "Moscow"
@@ -24,5 +25,19 @@ func TestGetCurrentLocation(t *testing.T) {
 	// Проверяем, что полученный результат соответствует ожидаемому
 	if got.City != expected.City {
 		t.Errorf("Ожидалось %v, получили %v", expected, got)
+	}
+}
+
+// Негативный тест
+func TestGetCurrentLocationNoCity(t *testing.T) {
+	city := "Londop"
+	_, err := geo.GetCurrentLocation(city)
+
+	if err != geo.ErrNoCity {
+		t.Errorf("Ожидалось %v, получили %v", geo.ErrNoCity, err)
+	}
+
+	if err != geo.ErrNotOk {
+		t.Errorf("Ожидалось %v, получили %v", geo.ErrNotOk, err)
 	}
 }
